@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { log, displayBanner } from './utils.js';
-import { login, heartbeat, earnCoins } from './networkOperations.js';
+import { login, heartbeat, earnCoins } from './api.js';
 import {
   heartbeatInterval,
   displayInterval,

@@ -47,6 +47,7 @@ You can customize the behavior of SillyCoins Harvester by modifying the `src/con
 - `sessionRefreshInterval`: Time between session refreshes (default: 900000ms)
 - `earnRequestInterval`: Time between coin earning requests (default: 60000ms)
 - `bannerStyle`: Choose the banner style ('ASCII_ART', 'SIMPLE', or 'MINIMAL')
+- `debugMode`: Set to `true` to enable debug logs (default: false)
 
 ## Usage
 
@@ -61,6 +62,7 @@ For development with auto-restart on file changes:
 ```
 npm run dev
 ```
+
 ## API Endpoints
 
 - `GET /`: Returns a simple message indicating that the harvester is running

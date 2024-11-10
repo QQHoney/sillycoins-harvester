@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import { fork } from 'child_process';
 import { log } from './src/utils.js';

@@ -20,6 +20,8 @@ const extractUserInfo = (html) => {
 };
 
 const displayUserInfo = (userInfo) => {
+  const line = '─'.repeat(40);
+  log('INFO', line);
   log('INFO', `Username: ${userInfo.username}`);
   log('INFO', `Email: ${userInfo.email}`);
   log('INFO', `Store Balance: ${userInfo.store_balance}`);
@@ -30,6 +32,7 @@ const displayUserInfo = (userInfo) => {
   log('INFO', `Store Ports: ${userInfo.store_ports}`);
   log('INFO', `Store Backups: ${userInfo.store_backups}`);
   log('INFO', `Store Databases: ${userInfo.store_databases}`);
+  log('INFO', line);
 };
 
 export const login = async () => {
@@ -118,7 +121,6 @@ export const earnCoins = async (headers) => {
       'x-requested-with': 'XMLHttpRequest',
     };
 
-    // Extract XSRF token from cookie
     const xsrfToken = earnHeaders.cookie.split(';').find((c) => c.trim().startsWith('XSRF-TOKEN='));
     if (xsrfToken) {
       earnHeaders['x-xsrf-token'] = decodeURIComponent(xsrfToken.split('=')[1]);
@@ -126,13 +128,27 @@ export const earnCoins = async (headers) => {
 
     log('INFO', 'Sending earn request...');
     const response = await axiosInstance.post(earnUrl, null, { headers: earnHeaders });
-    log('INFO', 'Earn request sent successfully');
+
+    /*if (response.status === 200) {
+      if (response.data && response.data.success) {*/
+    log('INFO', 'Earn request successful');
     log('DEBUG', 'Earn response', response.data);
+    return true;
+    /* } else {
+        log('WARN', 'Earn request returned success: false or unexpected data structure');
+        log('DEBUG', 'Earn response', response.data);
+        return false;
+      }
+    } else {
+      log('WARN', `Earn request returned unexpected status code: ${response.status}`);
+      return false;
+    }*/
   } catch (error) {
     log('ERROR', `Error occurred during earn request: ${error.message}`);
     if (error.response) {
       log('ERROR', `Response status: ${error.response.status}`);
       log('ERROR', `Response data: ${JSON.stringify(error.response.data)}`);
     }
+    return false;
   }
 };

@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { bannerStyle } from './constants.js';
+import { bannerStyle, debugMode } from './constants.js';
 
 export const getRandomColor = () => {
   const colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'];
@@ -7,6 +7,8 @@ export const getRandomColor = () => {
 };
 
 export const log = (level, message, data = null) => {
+  if (level === 'DEBUG' && !debugMode) return;
+
   const now = new Date();
   const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
   let coloredLevel;
