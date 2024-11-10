@@ -84,5 +84,10 @@ export const generateRandomUID = () => {
 };
 
 export const parseCookies = (cookiesString) => {
-  return cookiesString ? cookiesString.split(';').map(cookie => cookie.trim()).join('; ') : '';
+  return cookiesString
+    ? cookiesString
+        .split(';')
+        .map((cookie) => cookie.trim())
+        .join('; ')
+    : '';
 };

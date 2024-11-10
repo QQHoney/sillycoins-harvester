@@ -34,9 +34,11 @@ const displayUserInfo = (userInfo) => {
 
 export const login = async () => {
   const headers = {
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15',
-    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-    'cookie': parseCookies(process.env.COOKIES),
+    'user-agent':
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15',
+    accept:
+      'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    cookie: parseCookies(process.env.COOKIES),
   };
 
   try {
@@ -44,7 +46,9 @@ export const login = async () => {
     const loginResponse = await axiosInstance.get(loginUrl, { headers });
     log('INFO', 'Login successful');
 
-    headers.cookie = loginResponse.headers['set-cookie']?.map(cookie => cookie.split(';')[0]).join('; ') || parseCookies(process.env.COOKIES);
+    headers.cookie =
+      loginResponse.headers['set-cookie']?.map((cookie) => cookie.split(';')[0]).join('; ') ||
+      parseCookies(process.env.COOKIES);
 
     log('INFO', 'Fetching user information...');
     const creditsResponse = await axiosInstance.get(creditsUrl, { headers });
@@ -81,7 +85,11 @@ export const heartbeat = async (headers, lastUserInfo, initialBalance, totalEarn
         log('INFO', `Balance changed: ${earned > 0 ? '+' : ''}${earned.toFixed(2)} coins`);
         log('INFO', `Current Balance: ${currentBalance}, Total Earned: ${totalEarned}`);
       } else {
-        const heartbeatData = { timestamp: new Date().toISOString(), uid: generateRandomUID(), message: 'sent' };
+        const heartbeatData = {
+          timestamp: new Date().toISOString(),
+          uid: generateRandomUID(),
+          message: 'sent',
+        };
         log('DEBUG', `[HEARTBEAT] ${JSON.stringify(heartbeatData)}`);
       }
 
@@ -100,10 +108,10 @@ export const earnCoins = async (headers) => {
   try {
     const earnHeaders = {
       ...headers,
-      'accept': 'application/json',
+      accept: 'application/json',
       'content-length': '0',
-      'origin': baseUrl,
-      'referer': `${baseUrl}/store/credits`,
+      origin: baseUrl,
+      referer: `${baseUrl}/store/credits`,
       'sec-fetch-dest': 'empty',
       'sec-fetch-mode': 'cors',
       'sec-fetch-site': 'same-origin',
@@ -111,7 +119,7 @@ export const earnCoins = async (headers) => {
     };
 
     // Extract XSRF token from cookie
-    const xsrfToken = earnHeaders.cookie.split(';').find(c => c.trim().startsWith('XSRF-TOKEN='));
+    const xsrfToken = earnHeaders.cookie.split(';').find((c) => c.trim().startsWith('XSRF-TOKEN='));
     if (xsrfToken) {
       earnHeaders['x-xsrf-token'] = decodeURIComponent(xsrfToken.split('=')[1]);
     }

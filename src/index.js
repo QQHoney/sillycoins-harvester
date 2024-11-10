@@ -1,14 +1,19 @@
 import dotenv from 'dotenv';
 import { log, displayBanner } from './utils.js';
 import { login, heartbeat, earnCoins } from './networkOperations.js';
-import { heartbeatInterval, displayInterval, sessionRefreshInterval, earnRequestInterval } from './constants.js';
+import {
+  heartbeatInterval,
+  displayInterval,
+  sessionRefreshInterval,
+  earnRequestInterval,
+} from './constants.js';
 
 dotenv.config();
 
 const startHeartbeat = async () => {
   log('INFO', 'Starting login process...');
   let loginResult = await login();
-  
+
   if (loginResult) {
     log('INFO', 'Starting heartbeat process...');
     let lastUserInfo = loginResult.userInfo;
@@ -19,15 +24,20 @@ const startHeartbeat = async () => {
     const runHeartbeat = async () => {
       try {
         const currentTime = Date.now();
-        const { userInfo: updatedUserInfo, totalEarned: updatedTotalEarned } = await heartbeat(loginResult.headers, lastUserInfo, initialBalance, totalEarned);
-        
+        const { userInfo: updatedUserInfo, totalEarned: updatedTotalEarned } = await heartbeat(
+          loginResult.headers,
+          lastUserInfo,
+          initialBalance,
+          totalEarned
+        );
+
         if (currentTime - lastDisplayTime >= displayInterval) {
           const statusMessage = `Username: ${updatedUserInfo.username}, Current Balance: ${updatedUserInfo.store_balance}, Initial Balance: ${initialBalance}, Total Earned: ${updatedTotalEarned}`;
           log('INFO', statusMessage);
           process.send({ type: 'status', message: statusMessage });
           lastDisplayTime = currentTime;
         }
-        
+
         lastUserInfo = updatedUserInfo;
         totalEarned = updatedTotalEarned;
       } catch (error) {

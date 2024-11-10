@@ -18,20 +18,25 @@ SillyCoins Harvester is an automated tool designed to interact with the panel.si
 ## Installation
 
 1. Clone the repository:
+
    ```
    git clone https://github.com/mra1k3r0/sillycoins-harvester.git
    cd sillycoins-harvester
    ```
 
 2. Install dependencies:
+
    ```
    npm install
    ```
 
-3. Create a `.env` file in the root directory and add your cookies:
-   ```
-   COOKIES=your_cookies_here
-   ```
+3. Set up the environment variables:
+   - Copy the `.env.example` file to `.env`:
+     ```
+     cp .env.example .env
+     ```
+   - Edit the `.env` file and replace `your_cookies_here` with your actual cookies from panel.sillydev.co.uk
+   - Optionally, you can change the `PORT` if you want the server to run on a different port
 
 ## Configuration
 
@@ -56,7 +61,6 @@ For development with auto-restart on file changes:
 ```
 npm run dev
 ```
-
 ## API Endpoints
 
 - `GET /`: Returns a simple message indicating that the harvester is running
@@ -70,11 +74,11 @@ npm run dev
 
 ## License
 
-This project is licensed under the ISC License.
+This project is licensed under the MIT License.
 
 ## Author
 
-mra1k3r0
+[mra1k3r0](https://github.com/mra1k3r0)
 
 ## Disclaimer
 
