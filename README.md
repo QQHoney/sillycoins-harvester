@@ -20,7 +20,7 @@ SillyCoins Harvester is an automated tool designed to interact with the panel.si
 1. Clone the repository:
 
    ```
-   git clone https://github.com/mra1k3r0/sillycoins-harvester.git
+   git clone https://github.com/QQHoney/sillycoins-harvester.git
    cd sillycoins-harvester
    ```
 
